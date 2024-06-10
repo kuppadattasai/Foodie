@@ -1,0 +1,24 @@
+Dependencies 
+
+    express
+    mongoose
+    dotenv
+    body-parser
+    nodemon
+    jwt token
+    bcryptjs
+    multer
+
+Connection to DB
+
+API CREATION
+    Models 
+        Vendors : username,email,password
+        Firm : firmname, area , category , region , offer , image
+        Product : productName , price , category , image , bestSeller , description
+    
+    Controllers
+        vendorController
+
+    Routes
+        vendorRoutes

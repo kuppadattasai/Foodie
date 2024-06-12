@@ -7,10 +7,14 @@ const bodyParser = require('body-parser')
 const firmRoutes = require('./Routes/firmRoutes')
 const productRoutes = require('./Routes/productRoutes')
 const path = require('path')
+const cors = require('cors')
+
 
 dotEnv.config()
 
 const app = express();
+
+app.use(cors())
 
 app.use(bodyParser.json())
 

@@ -40,9 +40,11 @@ const vendorLogin = async(req,res)=>{
         if(!vendor || !(await bcrypt.compare(password, vendor.password))){
          return res.status(401).json({error :"User not found"})
         }
+        console.log("first")
         const token = jwt.sign({vendorId : vendor._id} , process.env.SECRET_KEY , {expiresIn :"1h"})
+        const vendorId = vendor._id
         console.log(email, "Token is ", token)
-        return res.status(200).json({success: "Login Successful", token})
+        return res.status(200).json({success: "Login Successful", token, vendorId})
     } catch (error) {
         console.log(error)
      return res.status(501).json({message: "Server Error"})
@@ -67,7 +69,9 @@ const getVendorById = async(req,res)=>{
         if(!vendor){
             res.status(401).json({error: "Vendor not found"})
         }
-        res.status(202).json({vendor})
+        const vendorFirmId = vendor.firm[0]._id;
+        res.status(202).json({vendor,vendorFirmId})
+        console.log(vendorFirmId)
     } catch (error) {
         console.log(error)
         res.status(500).json({error :"Server error"})

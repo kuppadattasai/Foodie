@@ -2,13 +2,14 @@
 const Firm = require('../models/Firm');
 const Product = require('../models/Product')
 const multer = require('multer')
+const path = require('path')
 
 const storage = multer.diskStorage({
     destination: (req,file,cb)=>{
         cb(null,'uploads/');
     },
     filename: (req,file,cb)=>{
-        cb(null,Date.now()+ path.extName(file.originalname))
+        cb(null,Date.now()+ path.extname(file.originalname))
     }
 })
 
@@ -63,6 +64,7 @@ const deleteProductById = async(req,res)=>{
         if(!prod){
             return res.status(404).json({error: "No product found"})
         }
+        res.status(200).json({ message: "Product deleted successfully" });
 
     } catch (error) {
         console.log(error)

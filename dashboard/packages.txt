@@ -1,0 +1,16 @@
+backend Dashboard
+
+installation - npm create vite@latest
+
+Components 
+    vendorDashboard
+    navbar
+    sidebar
+    all products
+
+    forms :
+        vendor_register
+        vendor login
+        add firm
+        add products
+        

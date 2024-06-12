@@ -2,13 +2,14 @@
 const Firm = require('../models/Firm')
 const Vendor = require('../models/Vendor')
 const multer = require('multer')
+const path = require('path')
 
 const storage = multer.diskStorage({
     destination: (req,file,cb)=>{
         cb(null,'uploads/');
     },
     filename: (req,file,cb)=>{
-        cb(null,Date.now()+ path.extName(file.originalname))
+        cb(null,Date.now()+ path.extname(file.originalname))
     }
 })
 
@@ -24,17 +25,26 @@ const addFirm = async(req,res)=>{
     if(!vendor){
         res.status(404).json({error: "Vendor not found"})
     }
+
+    if(vendor.firm.length > 0){
+        return res.status(400).json({message : "vendor can have only one firm"})
+    }
+
     const firm = new Firm({
          firmName, area,category,region,offer, image, vendor :vendor._id
     })
 
     const savedFirm = await firm.save();
 
+    const firmId = savedFirm._id;
+
     vendor.firm.push(savedFirm)
     
     await vendor.save()
 
-    return res.status(201).json({message: "Firm added successfully"})
+    
+
+    return res.status(201).json({message: "Firm added successfully",firmId})
         
     } catch (error) {
         console.log(error)
